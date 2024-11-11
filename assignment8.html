@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country and Capital Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+        h2 {
+            color: #333;
+        }
+        select {
+            padding: 10px;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+        #capitalDisplay {
+            margin-top: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Select a Country</h2>
+    <select id="countrySelect" onchange="displayCapital()">
+        <option value="">--Select a Country--</option>
+        <option value="USA">United States</option>
+        <option value="India">India</option>
+        <option value="Japan">Japan</option>
+        <option value="France">France</option>
+        <option value="Brazil">Brazil</option>
+    </select>
+
+    <div id="capitalDisplay"></div>
+
+    <script>
+        function displayCapital() {
+            const country = document.getElementById("countrySelect").value;
+            let capital = '';
+
+            switch (country) {
+                case 'USA':
+                    capital = 'Washington, D.C.';
+                    break;
+                case 'India':
+                    capital = 'New Delhi';
+                    break;
+                case 'Japan':
+                    capital = 'Tokyo';
+                    break;
+                case 'France':
+                    capital = 'Paris';
+                    break;
+                case 'Brazil':
+                    capital = 'Brasília';
+                    break;
+                default:
+                    capital = '';
+            }
+
+            document.getElementById("capitalDisplay").textContent = capital ? `Capital: ${capital}` : '';
+        }
+    </script>
+
+</body>
+</html>
