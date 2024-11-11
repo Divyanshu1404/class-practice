@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        #calculator {
+            width: 250px;
+            border: 2px solid #333;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+        }
+        .display {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2em;
+            text-align: right;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .button {
+            padding: 15px;
+            font-size: 1.2em;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 4px;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            transition: background-color 0.2s;
+        }
+        .button:active {
+            background-color: #ddd;
+        }
+        .button.operation {
+            background-color: #f9b32f;
+        }
+        .button.equals {
+            background-color: #4caf50;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<div id="calculator">
+    <input type="text" id="display" class="display" readonly>
+    <div class="buttons">
+        <div class="button" onclick="appendNumber(7)">7</div>
+        <div class="button" onclick="appendNumber(8)">8</div>
+        <div class="button" onclick="appendNumber(9)">9</div>
+        <div class="button operation" onclick="setOperation('/')">÷</div>
+
+        <div class="button" onclick="appendNumber(4)">4</div>
+        <div class="button" onclick="appendNumber(5)">5</div>
+        <div class="button" onclick="appendNumber(6)">6</div>
+        <div class="button operation" onclick="setOperation('*')">×</div>
+
+        <div class="button" onclick="appendNumber(1)">1</div>
+        <div class="button" onclick="appendNumber(2)">2</div>
+        <div class="button" onclick="appendNumber(3)">3</div>
+        <div class="button operation" onclick="setOperation('-')">−</div>
+
+        <div class="button" onclick="appendNumber(0)">0</div>
+        <div class="button" onclick="clearDisplay()">C</div>
+        <div class="button equals" onclick="calculate()">=</div>
+        <div class="button operation" onclick="setOperation('+')">+</div>
+    </div>
+</div>
+
+<script>
+    let display = document.getElementById('display');
+    let currentInput = '';
+    let operator = '';
+    let previousInput = '';
+
+    // Append a number to the display
+    function appendNumber(num) {
+        if (currentInput.length >= 4) return; // Prevent five-digit numbers
+        currentInput += num;
+        display.value = currentInput;
+    }
+
+    // Set the operation (+, -, *, /)
+    function setOperation(op) {
+        if (currentInput === '') return;
+        if (previousInput !== '') calculate();
+        operator = op;
+        previousInput = currentInput;
+        currentInput = '';
+    }
+
+    // Clear the display and reset all variables
+    function clearDisplay() {
+        currentInput = '';
+        previousInput = '';
+        operator = '';
+        display.value = '';
+    }
+
+    // Calculate the result
+    function calculate() {
+        if (previousInput === '' || currentInput === '' || operator === '') return;
+
+        let result;
+        const num1 = parseFloat(previousInput);
+        const num2 = parseFloat(currentInput);
+
+        switch (operator) {
+            case '+':
+                result = num1 + num2;
+                break;
+            case '-':
+                result = num1 - num2;
+                break;
+            case '*':
+                result = num1 * num2;
+                break;
+            case '/':
+                result = num2 !== 0 ? num1 / num2 : 'Error'; // Avoid division by zero
+                break;
+            default:
+                return;
+        }
+
+        display.value = result;
+        currentInput = result.toString();
+        previousInput = '';
+        operator = '';
+    }
+</script>
+
+</body>
+</html>
